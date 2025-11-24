@@ -1,28 +1,7 @@
 {
-  "security": {
-    "auth": {
-      "selectedType": "gemini-api-key"
-    }
-  },
-
-  "ui": {
-    "hideBanner": true,
-    "footer": {
-      "hideContextPercentage": false
-    },
-    "showMemoryUsage": true,
-    "theme": "auto"
-  },
-
-  "general": {
-    "previewFeatures": true,
-    "enablePromptCompletion": true
-  },
-
   "tools": {
     "autoAccept": true,
     "enableMessageBusIntegration": true,
-
     "core": [
       "run_shell_command(systemctl)",
       "run_shell_command(journalctl)",
@@ -59,7 +38,6 @@
       "google_web_search",
       "web_fetch"
     ],
-
     "exclude": [
       "run_shell_command(rm -rf /)",
       "run_shell_command(dd if=)",
@@ -70,7 +48,6 @@
       "run_shell_command(init 0)",
       "run_shell_command(halt)"
     ],
-
     "shell": {
       "enableInteractiveShell": true,
       "showColor": true,
@@ -78,9 +55,22 @@
       "defaultTimeout": 120000
     }
   },
-
-  "sandbox": "none",
-
+  "security": {
+    "auth": {
+      "selectedType": "gemini-api-key"
+    }
+  },
+  "ui": {
+    "hideBanner": true,
+    "footer": {
+      "hideContextPercentage": false
+    },
+    "showMemoryUsage": true
+  },
+  "general": {
+    "previewFeatures": true,
+    "enablePromptCompletion": true
+  },
   "memory": {
     "enabled": true,
     "autoSave": true
