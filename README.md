@@ -97,6 +97,40 @@ The `projects/` folder contains AGENTS.md templates for different tech stacks:
 
 Copy and customize for your projects.
 
+## MCP Servers (Enterprise)
+
+Custom MCP servers for enterprise-grade capabilities:
+
+### PostgreSQL (`mcp-servers/postgres_server.py`)
+```bash
+# Tools: pg_query, pg_schema, pg_tables, pg_stats, pg_execute
+# Features: Read-only mode, row limits, parameterized queries
+```
+
+### GitHub (`mcp-servers/github_server.py`)
+```bash
+# Tools: gh_pr_list, gh_pr_view, gh_issue_list, gh_api
+# Uses gh CLI - must be authenticated
+```
+
+### HTTP Fetch (`mcp-servers/http_server.py`)
+```bash
+# Tools: http_get, http_post, http_head, api_health_check
+# Features: Async, timeouts, response size limits
+```
+
+### MCP Config Example
+
+```toml
+[mcp_servers.postgres]
+command = "python3"
+args = ["/home/user/.codex/mcp-servers/postgres_server.py"]
+
+[mcp_servers.postgres.env]
+DATABASE_URL = "postgresql://localhost/mydb"
+MCP_POSTGRES_READONLY = "true"
+```
+
 ## Configuration
 
 ### config.toml

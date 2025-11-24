@@ -1,0 +1,71 @@
+model = "gpt-5.1-codex"
+model_reasoning_effort = "high"
+
+# === AUTOPILOT CONFIG ===
+# Fa leggere automaticamente codex.yaml come instructions file
+project_doc_fallback_filenames = ["AGENTS.md", "AGENTS.override.md", "codex.yaml", "codex.yml"]
+project_doc_max_bytes = 65536
+
+# Approval policy per full-auto mode
+approval_policy = "on-failure"
+
+[projects."/var/www/aiagens.ch"]
+trust_level = "trusted"
+
+[projects."/home/telegram/escrow-gigs-bot"]
+trust_level = "trusted"
+
+[projects."/home/swisswallet/swisswallet"]
+trust_level = "trusted"
+
+[projects."/var/www/antoniobrundo.vip"]
+trust_level = "trusted"
+
+[projects."/var/www/aiagens.ch.pre-restore-20251110_145425"]
+trust_level = "trusted"
+
+[projects."/var/www/abtrading"]
+trust_level = "trusted"
+
+# MCP Server Configuration - AIAgens RAG
+[mcp_servers.aiagens_rag]
+command = "python3"
+args = ["/var/www/aiagens.ch/scripts/mcp_stdio_wrapper.py"]
+
+[mcp_servers.aiagens_rag.env]
+PYTHONPATH = "/var/www/aiagens.ch"
+PYTHONUNBUFFERED = "1"
+
+# MCP Server - PostgreSQL Database Access
+[mcp_servers.postgres]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/postgres_server.py"]
+
+[mcp_servers.postgres.env]
+DATABASE_URL = "postgresql://localhost/aiagens"
+MCP_POSTGRES_READONLY = "true"
+MCP_POSTGRES_MAX_ROWS = "1000"
+PYTHONUNBUFFERED = "1"
+
+# MCP Server - GitHub Operations (via gh CLI)
+[mcp_servers.github]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/github_server.py"]
+
+[mcp_servers.github.env]
+PYTHONUNBUFFERED = "1"
+
+# MCP Server - HTTP Fetch / API Calls
+[mcp_servers.http]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/http_server.py"]
+
+[mcp_servers.http.env]
+MCP_HTTP_TIMEOUT = "30"
+MCP_HTTP_MAX_SIZE = "1048576"
+PYTHONUNBUFFERED = "1"
+
+[notice]
+hide_gpt5_1_migration_prompt = true
+hide_rate_limit_model_nudge = true
+"hide_gpt-5.1-codex-max_migration_prompt" = true
