@@ -65,6 +65,81 @@ MCP_HTTP_TIMEOUT = "30"
 MCP_HTTP_MAX_SIZE = "1048576"
 PYTHONUNBUFFERED = "1"
 
+# MCP Server - Redis Cache & Pub/Sub
+[mcp_servers.redis]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/redis_server.py"]
+
+[mcp_servers.redis.env]
+REDIS_URL = "redis://localhost:6379/0"
+MCP_REDIS_READONLY = "false"
+MCP_REDIS_MAX_KEYS = "100"
+PYTHONUNBUFFERED = "1"
+
+# MCP Server - Docker Container Management
+[mcp_servers.docker]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/docker_server.py"]
+
+[mcp_servers.docker.env]
+MCP_DOCKER_READONLY = "true"
+PYTHONUNBUFFERED = "1"
+
+# MCP Server - Slack Notifications
+[mcp_servers.slack]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/slack_server.py"]
+
+[mcp_servers.slack.env]
+# SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/xxx"
+# SLACK_BOT_TOKEN = "xoxb-xxx"
+SLACK_DEFAULT_CHANNEL = "#alerts"
+PYTHONUNBUFFERED = "1"
+
+# MCP Server - Prometheus Metrics
+[mcp_servers.prometheus]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/prometheus_server.py"]
+
+[mcp_servers.prometheus.env]
+PROMETHEUS_URL = "http://localhost:9090"
+MCP_PROMETHEUS_TIMEOUT = "30"
+PYTHONUNBUFFERED = "1"
+
+# MCP Server - Elasticsearch Logs & Search
+[mcp_servers.elasticsearch]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/elasticsearch_server.py"]
+
+[mcp_servers.elasticsearch.env]
+ELASTICSEARCH_URL = "http://localhost:9200"
+# ELASTICSEARCH_USER = ""
+# ELASTICSEARCH_PASSWORD = ""
+MCP_ES_MAX_RESULTS = "100"
+MCP_ES_TIMEOUT = "30"
+PYTHONUNBUFFERED = "1"
+
+# MCP Server - AWS Cloud Operations
+[mcp_servers.aws]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/aws_server.py"]
+
+[mcp_servers.aws.env]
+# AWS_PROFILE = "default"
+# AWS_REGION = "eu-central-1"
+PYTHONUNBUFFERED = "1"
+
+# MCP Server - Kubernetes Operations
+[mcp_servers.kubernetes]
+command = "python3"
+args = ["/home/gemini-admin/.codex/mcp-servers/kubernetes_server.py"]
+
+[mcp_servers.kubernetes.env]
+# KUBECONFIG = "~/.kube/config"
+K8S_NAMESPACE = "default"
+MCP_K8S_READONLY = "true"
+PYTHONUNBUFFERED = "1"
+
 [notice]
 hide_gpt5_1_migration_prompt = true
 hide_rate_limit_model_nudge = true

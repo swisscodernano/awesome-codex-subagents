@@ -99,24 +99,30 @@ Copy and customize for your projects.
 
 ## MCP Servers (Enterprise)
 
-Custom MCP servers for enterprise-grade capabilities:
+**10 custom MCP servers** for enterprise-grade capabilities:
 
-### PostgreSQL (`mcp-servers/postgres_server.py`)
-```bash
-# Tools: pg_query, pg_schema, pg_tables, pg_stats, pg_execute
-# Features: Read-only mode, row limits, parameterized queries
-```
+| Server | Tools | Purpose |
+|--------|-------|---------|
+| **PostgreSQL** | `pg_query`, `pg_schema`, `pg_tables`, `pg_stats` | Database access with safety controls |
+| **GitHub** | `gh_pr_list`, `gh_pr_view`, `gh_issue_list`, `gh_api` | GitHub operations via gh CLI |
+| **HTTP** | `http_get`, `http_post`, `http_head`, `api_health_check` | API calls and health checks |
+| **Redis** | `redis_get`, `redis_keys`, `redis_info`, `redis_hgetall` | Cache and pub/sub operations |
+| **Docker** | `docker_ps`, `docker_logs`, `docker_stats`, `docker_exec` | Container management |
+| **Slack** | `slack_alert`, `slack_incident`, `slack_send_message` | Notifications and alerts |
+| **Prometheus** | `prom_query`, `prom_alerts`, `prom_targets`, `prom_rules` | Metrics and alerting |
+| **Elasticsearch** | `es_search`, `es_logs`, `es_indices`, `es_aggregation` | Log search and analytics |
+| **AWS** | `aws_ec2_list`, `aws_s3_list`, `aws_lambda_list`, `aws_cloudwatch` | Cloud operations via boto3 |
+| **Kubernetes** | `k8s_get_pods`, `k8s_logs`, `k8s_describe`, `k8s_scale` | K8s operations via kubectl |
 
-### GitHub (`mcp-servers/github_server.py`)
-```bash
-# Tools: gh_pr_list, gh_pr_view, gh_issue_list, gh_api
-# Uses gh CLI - must be authenticated
-```
+### Quick MCP Setup
 
-### HTTP Fetch (`mcp-servers/http_server.py`)
 ```bash
-# Tools: http_get, http_post, http_head, api_health_check
-# Features: Async, timeouts, response size limits
+# Copy MCP servers
+mkdir -p ~/.codex/mcp-servers
+cp mcp-servers/*.py ~/.codex/mcp-servers/
+
+# Install dependencies
+pip install mcp psycopg2-binary redis httpx boto3
 ```
 
 ### MCP Config Example
@@ -129,7 +135,22 @@ args = ["/home/user/.codex/mcp-servers/postgres_server.py"]
 [mcp_servers.postgres.env]
 DATABASE_URL = "postgresql://localhost/mydb"
 MCP_POSTGRES_READONLY = "true"
+
+[mcp_servers.slack]
+command = "python3"
+args = ["/home/user/.codex/mcp-servers/slack_server.py"]
+
+[mcp_servers.slack.env]
+SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/xxx"
 ```
+
+### Safety Features
+
+All MCP servers include:
+- **READONLY modes** - Prevent accidental writes
+- **Row/key limits** - Prevent data overload
+- **Timeouts** - Prevent hanging operations
+- **Error handling** - Graceful failure messages
 
 ## Configuration
 
