@@ -1,6 +1,9 @@
-# Awesome Codex Subagents
+# Awesome AI CLI Agents
 
-A comprehensive collection of **97 specialized agent prompts** for OpenAI Codex CLI, inspired by Claude Code's subagent system.
+A comprehensive collection for **OpenAI Codex CLI** and **Gemini CLI**:
+- **97 specialized agent prompts** (Codex)
+- **10 enterprise MCP servers** (Codex)
+- **SRE/DevOps autopilot config** (Gemini CLI)
 
 ## Quick Install
 
@@ -151,6 +154,86 @@ All MCP servers include:
 - **Row/key limits** - Prevent data overload
 - **Timeouts** - Prevent hanging operations
 - **Error handling** - Graceful failure messages
+
+---
+
+## Gemini CLI Configuration (SRE/DevOps Autopilot)
+
+**Google's Gemini CLI** with ReAct architecture, shell access, and built-in MCP support.
+
+### Quick Setup
+
+```bash
+# Copy Gemini configs
+mkdir -p ~/.gemini/{commands/sre,policies/user}
+cp gemini/settings.json ~/.gemini/
+cp gemini/GEMINI.md ~/.gemini/
+cp -r gemini/commands/* ~/.gemini/commands/
+cp -r gemini/policies/* ~/.gemini/policies/
+```
+
+### Features
+
+| Component | Purpose |
+|-----------|---------|
+| **settings.json** | Auto-accept safe commands, tool whitelist/blacklist |
+| **GEMINI.md** | Global SRE persona, incident workflow, site inventory |
+| **commands/sre/*.toml** | 6 slash commands for incident response |
+| **policies/user/sre-safe.toml** | Policy engine (allow/deny/ask rules) |
+| **projects/*.md** | Project-specific contexts (abtrading, aiagens) |
+
+### Slash Commands
+
+```bash
+gemini  # Enter in project directory
+
+/sre:systemd-debug api.service    # Analyze systemd service
+/sre:pm2-incident my-app           # Debug PM2 process
+/sre:nginx-5xx aiagens.ch          # Analyze nginx 5xx errors
+/sre:health-check                  # Full system health check
+/sre:logs-tail api.service         # Tail and analyze logs
+/sre:disk-usage                    # Find disk space hogs
+```
+
+### Policy Engine
+
+**Automatic execution (no confirmation):**
+- `journalctl`, `systemctl status`, `pm2 status/logs`
+- `cat`, `tail`, `grep`, `df`, `free`, `ps`
+- `nginx -t`, `curl`, `git status`
+
+**Ask confirmation:**
+- `systemctl restart/stop`, `pm2 restart/stop`
+- `nginx -s reload`, `rm`, `mv`, `write_file`
+
+**Always deny:**
+- `rm -rf /`, `dd`, `shutdown`, `reboot`
+
+### Workflow Example
+
+```bash
+cd /var/www/abtrading
+gemini
+
+# You: "I'm getting 502 errors on the bot"
+
+# Gemini (autonomously):
+# - Runs systemctl status abtrading.service
+# - Analyzes logs with journalctl
+# - Identifies Python traceback
+# - Proposes fix: "Missing dependency 'ccxt'"
+# - Asks: "Install ccxt and restart?"
+```
+
+### Project Contexts
+
+The repo includes 2 project GEMINI.md templates:
+- **abtrading-GEMINI.md** - Python trading bot with critical safety rules
+- **aiagens-GEMINI.md** - Flask/Gunicorn API with multi-tenant database
+
+Copy and customize for your projects.
+
+---
 
 ## Configuration
 

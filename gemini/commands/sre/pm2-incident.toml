@@ -1,0 +1,19 @@
+description = "Gestione incident per processi Node gestiti da pm2"
+
+prompt = """
+Analizza lo stato del processo pm2 {{args}} e proponi un piano incident completo.
+
+1. Raccogli contesto:
+
+   !{pm2 status}
+   !{pm2 logs {{args}} --lines 200}
+   !{pm2 describe {{args}}}
+
+2. Se vedi errori ripetuti o crash loop:
+   - spiegami la root cause probabile,
+   - proponi una sequenza di azioni (es. clear cache, rebuild, restart),
+   - indica in chiaro ogni comando da eseguire (pm2 restart, ecc.).
+
+3. Se la situazione è critica ma poco chiara, proponi ulteriori
+   comandi diagnostici (senza eseguirli) spiegando cosa chiarirebbero.
+"""

@@ -1,0 +1,27 @@
+description = "Analizza disk usage e trova top consumers"
+
+prompt = """
+Analizza disk usage del sistema e trova cosa occupa più spazio.
+
+1. Overview generale:
+
+   !{df -h}
+
+2. Top 20 directory per size:
+
+   !{sudo du -hx / --max-depth=2 2>/dev/null | sort -rh | head -20}
+
+3. Trova file più grandi (>100MB):
+
+   !{sudo find /var/log /tmp /home -type f -size +100M -exec ls -lh {} \\; 2>/dev/null | head -20}
+
+4. Analisi e suggerimenti:
+   - Filesystem più pieni (>80% = WARNING, >90% = CRITICAL)
+   - Top consumers path
+   - Azioni suggerite:
+     * Log rotation mancante?
+     * Tmp files da pulire?
+     * Old backups da rimuovere?
+
+5. NON eliminare nulla automaticamente, solo proponi comandi.
+"""

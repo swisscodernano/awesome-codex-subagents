@@ -1,0 +1,36 @@
+description = "Full system health check rapido"
+
+prompt = """
+Esegui un health check completo del sistema e dei servizi critici.
+
+1. Sistema base:
+
+   !{df -h}
+   !{free -h}
+   !{uptime}
+   !{systemctl list-units --state=failed}
+
+2. Servizi critici:
+
+   !{systemctl status nginx}
+   !{systemctl status api.service}
+   !{systemctl status postgresql}
+   !{systemctl status redis-server}
+
+3. PM2 (se esiste):
+
+   !{pm2 status}
+
+4. Output strutturato:
+
+   ## Status Sistema
+   - Disk: [OK/WARN/CRIT] + % uso
+   - Memory: [OK/WARN/CRIT] + % uso
+   - Load: [valore]
+
+   ## Servizi Failed
+   [Lista o "Nessuno"]
+
+   ## Azioni Richieste
+   [Se ci sono problemi, proponi fix; altrimenti "Sistema OK"]
+"""

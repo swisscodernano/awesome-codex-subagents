@@ -1,0 +1,18 @@
+description = "Analizza errori 5xx su un virtual host nginx"
+
+prompt = """
+Ho errori 5xx sul virtual host {{args}}.
+
+1. Raccogli log recenti:
+
+   !{sudo grep -i " {{args}} " /var/log/nginx/access.log | tail -n 200}
+   !{sudo tail -n 200 /var/log/nginx/error.log}
+   !{sudo nginx -t}
+
+2. Dimmi:
+   - pattern di errore (codici HTTP, path, user agent),
+   - possibili cause (upstream down, timeout, config, ecc.),
+   - azioni consigliate lato nginx e lato upstream.
+
+3. Se serve, proponi comandi di verifica aggiuntivi (curl, systemctl status, ecc.).
+"""

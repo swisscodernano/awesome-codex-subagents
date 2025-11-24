@@ -1,0 +1,294 @@
+# Policy Engine Rules - SRE Safe Operations
+# Priority: higher number = evaluated first
+
+# ===== ALWAYS ALLOW (no confirmation) =====
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "journalctl "
+decision = "allow"
+priority = 200
+reason = "Read-only log access"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "systemctl status "
+decision = "allow"
+priority = 200
+reason = "Read-only status check"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "pm2 status"
+decision = "allow"
+priority = 200
+reason = "Read-only PM2 status"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "pm2 logs "
+decision = "allow"
+priority = 200
+reason = "Read-only PM2 logs"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "pm2 describe "
+decision = "allow"
+priority = 200
+reason = "Read-only PM2 describe"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "tail "
+decision = "allow"
+priority = 200
+reason = "Read-only file tail"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "head "
+decision = "allow"
+priority = 200
+reason = "Read-only file head"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "cat "
+decision = "allow"
+priority = 200
+reason = "Read-only file cat"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "grep "
+decision = "allow"
+priority = 200
+reason = "Read-only grep"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "ls "
+decision = "allow"
+priority = 200
+reason = "List files"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "df "
+decision = "allow"
+priority = 200
+reason = "Disk usage info"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "free "
+decision = "allow"
+priority = 200
+reason = "Memory info"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "ps "
+decision = "allow"
+priority = 200
+reason = "Process list"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "top -bn1"
+decision = "allow"
+priority = 200
+reason = "CPU snapshot"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "ss "
+decision = "allow"
+priority = 200
+reason = "Socket stats"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "lsof "
+decision = "allow"
+priority = 200
+reason = "Open files"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "nginx -t"
+decision = "allow"
+priority = 200
+reason = "Nginx config test (no changes)"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git status"
+decision = "allow"
+priority = 200
+reason = "Git status check"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git log"
+decision = "allow"
+priority = 200
+reason = "Git log read"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git diff"
+decision = "allow"
+priority = 200
+reason = "Git diff read"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "curl "
+decision = "allow"
+priority = 200
+reason = "HTTP requests"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "wget "
+decision = "allow"
+priority = 200
+reason = "HTTP downloads"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "redis-cli ping"
+decision = "allow"
+priority = 200
+reason = "Redis ping check"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "redis-cli info"
+decision = "allow"
+priority = 200
+reason = "Redis info read"
+
+# ===== ASK USER CONFIRMATION =====
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "systemctl restart "
+decision = "ask_user"
+priority = 300
+reason = "Service restart requires confirmation"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "systemctl stop "
+decision = "ask_user"
+priority = 300
+reason = "Service stop requires confirmation"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "systemctl start "
+decision = "ask_user"
+priority = 300
+reason = "Service start requires confirmation"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "pm2 restart "
+decision = "ask_user"
+priority = 300
+reason = "PM2 restart requires confirmation"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "pm2 stop "
+decision = "ask_user"
+priority = 300
+reason = "PM2 stop requires confirmation"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "pm2 delete "
+decision = "ask_user"
+priority = 300
+reason = "PM2 delete requires confirmation"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "nginx -s reload"
+decision = "ask_user"
+priority = 300
+reason = "Nginx reload requires confirmation"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "rm "
+decision = "ask_user"
+priority = 400
+reason = "File deletion requires confirmation"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "mv "
+decision = "ask_user"
+priority = 400
+reason = "File move requires confirmation"
+
+[[rule]]
+toolName = "write_file"
+decision = "ask_user"
+priority = 300
+reason = "File write requires confirmation"
+
+# ===== ALWAYS DENY =====
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "rm -rf /"
+decision = "deny"
+priority = 1000
+reason = "Destructive command blocked"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "dd if="
+decision = "deny"
+priority = 1000
+reason = "Dangerous disk operation blocked"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "mkfs"
+decision = "deny"
+priority = 1000
+reason = "Filesystem format blocked"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "shutdown"
+decision = "deny"
+priority = 1000
+reason = "System shutdown blocked"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "reboot"
+decision = "deny"
+priority = 1000
+reason = "System reboot blocked"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "halt"
+decision = "deny"
+priority = 1000
+reason = "System halt blocked"
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "init 0"
+decision = "deny"
+priority = 1000
+reason = "System shutdown blocked"

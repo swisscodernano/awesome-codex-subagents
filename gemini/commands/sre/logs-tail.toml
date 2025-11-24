@@ -1,0 +1,27 @@
+description = "Tail logs di un servizio con analisi rapida"
+
+prompt = """
+Mostrami gli ultimi log del servizio {{args}} e analizza rapidamente.
+
+1. Determina il tipo di servizio (systemd o pm2):
+
+   !{systemctl is-active {{args}} 2>/dev/null || echo "not_systemd"}
+   !{pm2 id {{args}} 2>/dev/null || echo "not_pm2"}
+
+2. Raccogli log in base al tipo:
+
+   - Se systemd:
+     !{journalctl -u {{args}} --no-pager -n 100}
+
+   - Se pm2:
+     !{pm2 logs {{args}} --lines 100 --nostream}
+
+   - Se nessuno dei due, cerca in /var/log:
+     !{sudo tail -n 100 /var/log/{{args}}* 2>/dev/null}
+
+3. Analisi rapida:
+   - Ci sono errori evidenti? (ERROR, FATAL, exception, traceback)
+   - Pattern ripetuti?
+   - Ultima occorrenza problema?
+   - Proposta azione immediata (se serve)
+"""
