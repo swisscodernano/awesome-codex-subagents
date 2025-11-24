@@ -235,6 +235,98 @@ Copy and customize for your projects.
 
 ---
 
+## Claude Code Configuration (Enterprise)
+
+**Anthropic's Claude Code** with 120+ built-in subagents, native tools, and MCP support.
+
+### Quick Setup
+
+```bash
+# Copy Claude configs
+cp claude/CLAUDE.md ~/.claude/
+cp claude/mcp_settings.json ~/.claude/
+cp claude/abtrading-CLAUDE.md /var/www/abtrading/CLAUDE.md
+```
+
+### Features
+
+| Component | Purpose |
+|-----------|---------|
+| **CLAUDE.md** | Global SRE persona, workflow rules, server inventory |
+| **mcp_settings.json** | 5 MCP servers (postgres, redis, docker, github, rag) |
+| **Project CLAUDE.md** | Auto-loaded context (abtrading template included) |
+
+### Built-in Subagents
+
+Claude Code has 120+ specialized subagents:
+- **Explore** - Codebase exploration
+- **Plan** - Multi-step task planning
+- **Security** - Code security review
+- **Performance** - Optimization analysis
+- **Debugger** - Complex debugging
+- **and 115+ more...**
+
+### MCP Servers Added
+
+```json
+{
+  "aiagens-rag": "Project knowledge base",
+  "postgres": "Database queries (readonly)",
+  "redis": "Cache operations",
+  "docker": "Container management",
+  "github": "PR/issue operations"
+}
+```
+
+### Usage
+
+```bash
+cd /var/www/abtrading
+cld  # Alias for 'claude'
+
+# Claude Code automatically:
+# - Reads CLAUDE.md (global + project)
+# - Loads 5 MCP servers
+# - Uses 120+ built-in subagents
+# - Plans complex tasks with TodoWrite
+
+# You: "The trading bot crashed, investigate"
+# Claude:
+# - Uses Bash tool for systemctl/journalctl
+# - Uses Read tool for logs
+# - Uses Grep tool for errors
+# - Creates Todo list for incident steps
+# - Proposes fix with risk assessment
+```
+
+### Workflow Example
+
+```bash
+cd /var/www/aiagens.ch
+cld
+
+# Incident: "502 errors on the API"
+
+# Claude Code will:
+# 1. Create TodoList (check status, analyze logs, identify cause, propose fix)
+# 2. Run: systemctl status api.service
+# 3. Run: journalctl -u api.service -n 200
+# 4. Analyze Gunicorn errors
+# 5. Propose: "Worker timeout - increase timeout in gunicorn config"
+# 6. Ask: "Shall I edit the config and restart?"
+```
+
+### Bash Aliases
+
+```bash
+cld          # Launch Claude Code
+cldsre       # Claude in abtrading project
+cldapi       # Claude for API work
+cldincident  # Quick start mode
+```
+
+---
+
 ## Configuration
 
 ### config.toml

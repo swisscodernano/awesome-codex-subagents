@@ -1,0 +1,47 @@
+{
+  "mcpServers": {
+    "aiagens-rag": {
+      "command": "python3",
+      "args": ["/var/www/aiagens.ch/scripts/mcp_stdio_wrapper.py"],
+      "env": {
+        "PYTHONPATH": "/var/www/aiagens.ch",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    "postgres": {
+      "command": "python3",
+      "args": ["/home/gemini-admin/.codex/mcp-servers/postgres_server.py"],
+      "env": {
+        "DATABASE_URL": "postgresql://localhost/aiagens",
+        "MCP_POSTGRES_READONLY": "true",
+        "MCP_POSTGRES_MAX_ROWS": "1000",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    "redis": {
+      "command": "python3",
+      "args": ["/home/gemini-admin/.codex/mcp-servers/redis_server.py"],
+      "env": {
+        "REDIS_URL": "redis://localhost:6379/0",
+        "MCP_REDIS_READONLY": "false",
+        "MCP_REDIS_MAX_KEYS": "100",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    "docker": {
+      "command": "python3",
+      "args": ["/home/gemini-admin/.codex/mcp-servers/docker_server.py"],
+      "env": {
+        "MCP_DOCKER_READONLY": "true",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    "github": {
+      "command": "python3",
+      "args": ["/home/gemini-admin/.codex/mcp-servers/github_server.py"],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}
